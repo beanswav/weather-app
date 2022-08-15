@@ -9,6 +9,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+.utils/APIKeys.js
 
 # macOS
 .DS_Store
