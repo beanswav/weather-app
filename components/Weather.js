@@ -1,18 +1,36 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { View, Text, StyleSheet, Image } from "react-native";
+import { conditions } from "./Conditions";
+import React, { useState, useEffect } from "react";
 
-export default function Weather({ weather, temperature }) {
-  const temp = Math.ceil(temperature);
+export default function Weather({
+  temperature,
+  weatherCondition,
+  weatherIcon,
+  description,
+}) {
   return (
-    <View style={styles.weatherContainer}>
+    <View
+      style={[
+        styles.weatherContainer,
+        {
+          backgroundColor: weatherCondition
+            ? conditions[weatherCondition].color
+            : "gray",
+        },
+      ]}
+    >
       <View style={styles.headerContainer}>
-        <MaterialCommunityIcons size={48} name="weather-sunny" color={"#fff"} />
-        <Text style={{ fontSize: 48, color: "#fff" }}>{temp}°F</Text>
+        <Image
+          source={{
+            uri: `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`,
+          }}
+          style={{ width: 80, height: 80 }}
+        />
+        <Text style={{ fontSize: 48, color: "#fff" }}>{temperature}°F</Text>
       </View>
       <View style={styles.bodyContainer}>
-        <Text style={styles.title}>{weather}</Text>
-        <Text style={styles.subtitle}>It hurts my eyes!</Text>
+        <Text style={styles.title}>{weatherCondition}</Text>
+        <Text style={styles.subtitle}>{description}</Text>
       </View>
     </View>
   );
@@ -21,19 +39,19 @@ export default function Weather({ weather, temperature }) {
 const styles = StyleSheet.create({
   weatherContainer: {
     flex: 1,
-    backgroundColor: "#f7b733",
   },
   headerContainer: {
     flex: 1,
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
   },
   bodyContainer: {
     flex: 2,
     alignItems: "flex-start",
     justifyContent: "flex-end",
     paddingLeft: 25,
-    marginBottom: 40,
+    marginBottom: 20,
   },
   title: {
     fontSize: 48,
